@@ -1,5 +1,6 @@
 import React from "react"
 import CartesChats from "./CartesChats/CartesChats";
+import CatScreen from "./cat/CatScreen";
 import Header from "./Header/Header";
 
 
@@ -10,6 +11,7 @@ class App extends React.Component {
      <div>
       <Header />
       <CartesChats />
+      <CatScreen />
     </div>
    )
   }
