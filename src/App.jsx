@@ -1,7 +1,7 @@
 import React from "react"
-import CartesChats from "./CartesChats/CartesChats";
 import CatScreen from "./cat/CatScreen";
 import Header from "./Header/Header";
+import '@fontsource/roboto';
 
 
 class App extends React.Component {
@@ -10,7 +10,6 @@ class App extends React.Component {
    return (
      <div>
       <Header />
-      <CartesChats />
       <CatScreen />
     </div>
    )

@@ -1,5 +1,5 @@
 const fetchCats = async (page) => {
-    const limit = 4
+    const limit = 10
     const url = `https://api.thecatapi.com/v1/images/search?limit=${limit}&page=${page}&order=ASC`
     const response =  await fetch(url, {
         method: "GET",
@@ -8,29 +8,27 @@ const fetchCats = async (page) => {
         }
     })
 
-    pagination(response)
+    const data = await response.json()
 
- return response.json()
-}
+    console.log(data)
 
-const pagination = async (response) => {
+    const cats = data.map((cat) => {
+        return {
+            id: cat.id,
+            url: cat.url,
+        }
+    })
+
     const paginationCount = response.headers.get("pagination-count")
-    const page = response.headers.get("pagination-page")
-    const nbrPagesMax = paginationCount / Math.floor(limit)
-    const shownPage = 0
-    const maxShownPages = 10
-    const pagination = []
+    const pageCount = Math.floor(paginationCount / limit)
 
-    // - afficher maximum 10 page
-    // - apres les 10 pages afficher ...
-    // - si apres les 10 premieres pages afficher ... 
-    // - boucler pour afficher le num de la page et le lien vers la page
-    while(shownPage < maxShownPages) {
-        pagination.push(() => {
-           let msg = "<h4>" + page + "</h4>"
-        })
+    console.log(paginationCount)
+
+    return {
+        cats,
+        paginationCount: paginationCount || 0,
+        pageCount: pageCount,
     }
-
 }
 
-export { fetchCats, pagination }
+export { fetchCats }
