@@ -1,17 +1,19 @@
 const fetchCats = async (page) => {
-    const limit = 10
+    // Nombre de cartes qui seront afficher dans la page
+    const limit = 12
     const url = `https://api.thecatapi.com/v1/images/search?limit=${limit}&page=${page}&order=ASC`
     const response =  await fetch(url, {
         method: "GET",
+        // La clé est requise dans le header par l'API
         headers: {
             "x-api-key": "1f56fd17-3602-421d-9fe4-dd2270a764a8"
         }
     })
 
+    // Convertie la réponse de l'API
     const data = await response.json()
 
-    console.log(data)
-
+    // Boucle au travers des données pour en extraire l'id et l'url seulement
     const cats = data.map((cat) => {
         return {
             id: cat.id,
@@ -20,9 +22,8 @@ const fetchCats = async (page) => {
     })
 
     const paginationCount = response.headers.get("pagination-count")
+    // Calcul qui détermine le nombre maximale des pages qui pourront être afficher dans la pagination
     const pageCount = Math.floor(paginationCount / limit)
-
-    console.log(paginationCount)
 
     return {
         cats,
