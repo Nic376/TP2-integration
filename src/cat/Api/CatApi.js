@@ -1,7 +1,8 @@
 const fetchCats = async (page) => {
     // Nombre de cartes qui seront afficher dans la page
     const limit = 12
-    const url = `https://api.thecatapi.com/v1/images/search?limit=${limit}&page=${page}&order=ASC`
+    let actualPage = page -1
+    const url = `https://api.thecatapi.com/v1/images/search?limit=${limit}&page=${actualPage}&order=ASC`
     const response =  await fetch(url, {
         method: "GET",
         // La clé est requise dans le header par l'API
@@ -23,7 +24,7 @@ const fetchCats = async (page) => {
 
     const paginationCount = response.headers.get("pagination-count")
     // Calcul qui détermine le nombre maximale des pages qui pourront être afficher dans la pagination
-    const pageCount = Math.floor(paginationCount / limit)
+    const pageCount = Math.ceil(paginationCount / limit)
 
     return {
         cats,
